@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Artist Info</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #111;
+      color: white;
+      text-align: center;
+    }
+    h1 {
+      color: #1db954;
+      margin-bottom: 30px;
+    }
+    .content {
+      font-size: 18px;
+      line-height: 1.8;
+    }
+    .artist-img {
+      width: 200px;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      margin-bottom: 20px;
+    }
+    .nav {
+      margin-bottom: 40px;
+    }
+    .nav button {
+      background-color: #1db954;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .nav button:hover {
+      background-color: #17a34a;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <button onclick="goToAlbums()">Albums</button>
+    <button onclick="goToMostListen()">Most Listen</button>
+  </div>
+
+  <img id="artist-image" class="artist-img" src="" alt="Artist Image" />
+  <h1 id="artist-name"></h1>
+  <div class="content" id="info-list"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const artist = params.get('artist');
+    const type = params.get('type');
+
+    const heading = document.getElementById("artist-name");
+    const infoDiv = document.getElementById("info-list");
+    const artistImage = document.getElementById("artist-image");
+
+    const artistData = {
+      "ARJIT SINGH": {
+        image: "arjit-singh.jpg",
+        albums: ["Tum Hi Ho", "Channa Mereya", "Raabta", "Ae Dil Hai Mushkil"],
+        mostListen: {
+          title: "Tum Hi Ho",
+          movie: "Aashiqui 2",
+          year: 2013,
+          duration: "4:22",
+          spotify: "https://open.spotify.com/track/4d4kFf9C2rL5JY2eO2KkZu"
+        }
+      },
+      "SONU NIGAM": {
+        image: "sonu-nigam.jpg",
+        albums: ["Kal Ho Naa Ho", "Abhi Mujh Mein Kahin", "Sandese Aate Hai"],
+        mostListen: {
+          title: "Abhi Mujh Mein Kahin",
+          movie: "Agneepath",
+          year: 2012,
+          duration: "6:50",
+          spotify: "https://open.spotify.com/track/3OeUl4HF8HGFnD3BzKBdBu"
+        }
+      },
+      "SHREYA GOSHAL": {
+        image: "shreya.jpg",
+        albums: ["Teri Ore", "Deewani Mastani", "Sun Raha Hai", "Barso Re"],
+        mostListen: {
+          title: "Sun Raha Hai",
+          movie: "Aashiqui 2",
+          year: 2013,
+          duration: "6:33",
+          spotify: "https://open.spotify.com/track/6qS5FjZj16pDpALN7a1XfD"
+        }
+      },
+      "ARMAN MALIK": {
+        image: "armaan-malik.jpg",
+        albums: ["Main Rahoon Ya Na Rahoon", "Bol Do Na Zara", "Control"],
+        mostListen: {
+          title: "Bol Do Na Zara",
+          movie: "Azhar",
+          year: 2016,
+          duration: "5:03",
+          spotify: "https://open.spotify.com/track/3ZtV3I5XhWzYfNnD5JSGO4"
+        }
+      },
+      "UDIT NARAYAN": {
+        image: "udit-narayan.jpg",
+        albums: ["Pehla Nasha", "Papa Kehte Hain", "Tip Tip Barsa Paani"],
+        mostListen: {
+          title: "Papa Kehte Hain",
+          movie: "Qayamat Se Qayamat Tak",
+          year: 1988,
+          duration: "5:57",
+          spotify: "https://open.spotify.com/track/4LImKSv5ROpAcBJGsWsXAf"
+        }
+      }
+    };
+
+    if (artist && artistData[artist]) {
+      artistImage.src = artistData[artist].image;
+      artistImage.alt = artist;
+
+      if (type === 'mostlisten') {
+        const song = artistData[artist].mostListen;
+        heading.innerText = `${artist} - Most Listened Song`;
+        infoDiv.innerHTML = `
+          <p><strong>🎧 ${song.title}</strong></p>
+          <p>🎬 Movie: ${song.movie}</p>
+          <p>📅 Year: ${song.year}</p>
+          <p>⏱ Duration: ${song.duration}</p>
+          <p><a href="${song.spotify}" target="_blank" style="color: #1db954; text-decoration: underline;">Listen on Spotify</a></p>
+        `;
+      } else {
+        heading.innerText = `${artist} - Popular Albums`;
+        const list = artistData[artist].albums;
+        infoDiv.innerHTML = list.map(item => `🎵 ${item}`).join(", ");
+      }
+    } else {
+      heading.innerText = "Artist Not Found";
+      infoDiv.innerText = "No data available for this artist.";
+      artistImage.style.display = "none";
+    }
+
+    function goToAlbums() {
+      window.open(`album.html?artist=${encodeURIComponent(artist)}&type=albums`, '_blank');
+    }
+
+    function goToMostListen() {
+      window.open(`album.html?artist=${encodeURIComponent(artist)}&type=mostlisten`, '_blank');
+    }
+  </script>
+</body>
+</html>

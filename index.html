@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music Artists</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(to bottom, #1e1e1e, #000);
+      color: white;
+    }
+    header {
+      display: flex;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+    }
+    header nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    header nav a:hover {
+      color: #1db954;
+    }
+    .artist {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px 20px;
+      text-align: center;
+      border-bottom: 2px solid rgba(255,255,255,0.05);
+    }
+    .artist img {
+      border-radius: 20px;
+      width: 200px;
+      height: auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .spotify-logo {
+      height: 20px;
+      margin-bottom: 5px;
+      cursor: pointer;
+    }
+    .artist-name {
+      font-size: 28px;
+      margin: 20px 0 8px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .label {
+      font-size: 14px;
+      letter-spacing: 1px;
+      color: #ccc;
+    }
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .buttons button {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .buttons button:hover {
+      background-color: #1db954;
+      color: black;
+    }
+  </style>
+  <script>
+    function openAlbumPage(artist) {
+      const encoded = encodeURIComponent(artist);
+      window.open(`album.html?artist=${encoded}`, '_blank');
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="#">HOME</a>
+      <a href="#">ARTISTS</a>
+      <a href="#">ALBUMS</a>
+      <a href="#">ABOUT</a>
+    </nav>
+  </header>
+
+  <!-- Artist Blocks -->
+  <div class="artist" style="background: linear-gradient(#061738, #2c3e50);">
+    <img src="arjit singh.jpg" alt="Arijit Singh" />
+    <a href="https://open.spotify.com/artist/4YRxDV8wJFPHPTeXepOstw" target="_blank">
+      <img class="spotify-logo" src="spotify-logo.png" alt="Spotify" />
+    </a>
+    <div class="artist-name">ARJIT SINGH</div>
+    <div class="label">MUSIC ARTIST</div>
+    <div class="buttons">
+      <button onclick="openAlbumPage('ARJIT SINGH')">ALBUM</button>
+      <button>PLAYLIST</button>
+      <button>MOST LISTEN</button>
+    </div>
+  </div>
+
+  <div class="artist" style="background: linear-gradient(#1aad79, #1a88b0);">
+    <img src="sonu nigam.jpg" alt="Sonu Nigam" />
+    <a href="https://open.spotify.com/artist/1wRPtKGflJrBx9BmLsSwlU" target="_blank">
+      <img class="spotify-logo" src="spotify-logo.png" alt="Spotify" />
+    </a>
+    <div class="artist-name">SONU NIGAM</div>
+    <div class="label">MUSIC ARTIST</div>
+    <div class="buttons">
+      <button onclick="openAlbumPage('SONU NIGAM')">ALBUM</button>
+      <button>PLAYLIST</button>
+      <button>MOST LISTEN</button>
+    </div>
+  </div>
+
+  <div class="artist" style="background: linear-gradient(#f6a623, #f9d423);">
+    <img src="shreya.jpg" alt="Shreya Ghoshal" />
+    <a href="https://open.spotify.com/artist/0oOet2f43PA68X5RxKobEy" target="_blank">
+      <img class="spotify-logo" src="spotify-logo.png" alt="Spotify" />
+    </a>
+    <div class="artist-name">SHREYA GOSHAL</div>
+    <div class="label">MUSIC ARTIST</div>
+    <div class="buttons">
+      <button onclick="openAlbumPage('SHREYA GOSHAL')">ALBUM</button>
+      <button>PLAYLIST</button>
+      <button>MOST LISTEN</button>
+    </div>
+  </div>
+
+  <div class="artist" style="background: linear-gradient(#d63eff, #ff4d77);">
+    <img src="armaan malik.jpg" alt="Armaan Malik" />
+    <a href="https://open.spotify.com/artist/4K6blSRoklNdpw4mzLxwfn" target="_blank">
+      <img class="spotify-logo" src="spotify-logo.png" alt="Spotify" />
+    </a>
+    <div class="artist-name">ARMAN MALIK</div>
+    <div class="label">MUSIC ARTIST</div>
+    <div class="buttons">
+      <button onclick="openAlbumPage('ARMAN MALIK')">ALBUM</button>
+      <button>PLAYLIST</button>
+      <button>MOST LISTEN</button>
+    </div>
+  </div>
+
+  <div class="artist" style="background: linear-gradient(#ff0044, #ff7e00);">
+    <img src="udit narayan.jpg" alt="Udit Narayan" />
+    <a href="https://open.spotify.com/artist/7HCqGPJcQTyGJ2yqntbuyr" target="_blank">
+      <img class="spotify-logo" src="spotify-logo.png" alt="Spotify" />
+    </a>
+    <div class="artist-name">UDIT NARAYAN</div>
+    <div class="label">MUSIC ARTIST</div>
+    <div class="buttons">
+      <button onclick="openAlbumPage('UDIT NARAYAN')">ALBUM</button>
+      <button>PLAYLIST</button>
+      <button>MOST LISTEN</button>
+    </div>
+  </div>
+</body>
+</html>

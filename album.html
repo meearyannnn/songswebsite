@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Artist Info</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #111;
+      color: white;
+      text-align: center;
+    }
+    h1 {
+      color: #1db954;
+      margin-bottom: 30px;
+    }
+    .content {
+      font-size: 18px;
+      line-height: 1.8;
+    }
+    .artist-img {
+      width: 200px;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      margin-bottom: 20px;
+    }
+    .nav {
+      margin-bottom: 40px;
+    }
+    .nav button {
+      background-color: #1db954;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .nav button:hover {
+      background-color: #17a34a;
+    }
+    .playlist-link {
+      color: #1db954;
+      text-decoration: underline;
+      cursor: pointer;
+      display: block;
+      margin: 8px 0;
+    }
+    .back-home {
+      margin-top: 50px;
+    }
+    .back-home a {
+      background-color: #1db954;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .back-home a:hover {
+      background-color: #17a34a;
+    }
+    audio {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <button onclick="goToAlbums()">Albums</button>
+    <button onclick="goToMostListen()">Most Listen</button>
+    <button onclick="goToPlaylists()">Playlists</button>
+  </div>
+
+  <img id="artist-image" class="artist-img" src="" alt="Artist Image" />
+  <h1 id="artist-name"></h1>
+  <div class="content" id="info-list"></div>
+
+  <div class="back-home">
+    <a href="index.html">Back to Home</a>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const artist = params.get('artist');
+    const type = params.get('type');
+    const playlistName = params.get('playlist');
+
+    const heading = document.getElementById("artist-name");
+    const infoDiv = document.getElementById("info-list");
+    const artistImage = document.getElementById("artist-image");
+
+    const artistData = {
+      "ARJIT SINGH": {
+        image: "arjit-singh.jpg",
+        albums: [
+          { title: "Tum Hi Ho", file: "Tum Hi Ho.mp3" },
+          { title: "Channa Mereya", file: "Channa Mereya Ae Dil Hai Mushkil.mp3" },
+          { title: "Raabta", file: "Raabta.mp3" },
+          { title: "Ae Dil Hai Mushkil", file: "Ae Dil Hai Mushkil.mp3" }
+        ],
+        mostListen: {
+          title: "Tum Hi Ho",
+          movie: "Aashiqui 2",
+          year: 2013,
+          duration: "4:22",
+          spotify: "https://open.spotify.com/track/4d4kFf9C2rL5JY2eO2KkZu"
+        },
+        playlists: {
+          "Romantic Hits": ["Tum Hi Ho", "Channa Mereya"],
+          "Heartbreak Songs": ["Raabta"],
+          "Top 10 Arijit": ["Ae Dil Hai Mushkil", "Raabta", "Tum Hi Ho"]
+        }
+      },
+      // other artists unchanged...
+    };
+
+    if (artist && artistData[artist]) {
+      artistImage.src = artistData[artist].image;
+      artistImage.alt = artist;
+
+      if (playlistName && type === 'playlists') {
+        heading.innerText = `${playlistName} - Songs by ${artist}`;
+        const songs = artistData[artist].playlists[playlistName];
+        infoDiv.innerHTML = songs ? songs.map(song => `🎵 ${song}`).join('<br>') : "Playlist not found.";
+      } else if (type === 'mostlisten') {
+        const song = artistData[artist].mostListen;
+        heading.innerText = `${artist} - Most Listened Song`;
+        infoDiv.innerHTML = `
+          <p><strong>🎧 ${song.title}</strong></p>
+          <p>🎬 Movie: ${song.movie}</p>
+          <p>📅 Year: ${song.year}</p>
+          <p>⏱ Duration: ${song.duration}</p>
+          <p><a href="${song.spotify}" target="_blank" style="color: #1db954; text-decoration: underline;">Listen on Spotify</a></p>
+        `;
+      } else if (type === 'playlists') {
+        heading.innerText = `${artist} - Popular Playlists`;
+        const list = Object.keys(artistData[artist].playlists);
+        infoDiv.innerHTML = list.map(item => `<span class="playlist-link" onclick="goToPlaylist('${item}')">🎶 ${item}</span>`).join("");
+      } else {
+        heading.innerText = `${artist} - Popular Albums`;
+        const list = artistData[artist].albums;
+        infoDiv.innerHTML = list.map(item => `
+          <div>
+            🎵 ${item.title}<br>
+            <audio controls>
+              <source src="${item.file}" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        `).join("<br>");
+      }
+    } else {
+      heading.innerText = "Artist Not Found";
+      infoDiv.innerText = "No data available for this artist.";
+      artistImage.style.display = "none";
+    }
+
+    function goToAlbums() {
+      window.location.href = `${location.pathname}?artist=${encodeURIComponent(artist)}&type=albums`;
+    }
+
+    function goToMostListen() {
+      window.location.href = `${location.pathname}?artist=${encodeURIComponent(artist)}&type=mostlisten`;
+    }
+
+    function goToPlaylists() {
+      window.location.href = `${location.pathname}?artist=${encodeURIComponent(artist)}&type=playlists`;
+    }
+
+    function goToPlaylist(name) {
+      window.location.href = `${location.pathname}?artist=${encodeURIComponent(artist)}&type=playlists&playlist=${encodeURIComponent(name)}`;
+    }
+  </script>
+</body>
+</html>
